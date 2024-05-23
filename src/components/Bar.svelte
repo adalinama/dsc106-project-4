@@ -158,7 +158,6 @@
 		font-family: Helvetica, Arial;
 		width: 200px;
 		position: absolute;
-        transition: top 300ms ease, left 300ms ease;
         opacity: 0;
 	}
 
@@ -174,6 +173,5 @@
 		padding: 10px;
         border: 1px solid rgba(0, 0, 0, 0.5);
         pointer-events: none;
-        transition: top 300ms ease, left 300ms ease;
 	}
 </style>

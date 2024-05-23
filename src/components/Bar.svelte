@@ -104,8 +104,8 @@
 	>
 		{#if hovered !== -1}
 			Out of 1159 restaurants in Santa Barbara,
-            there are {categories[hovered].count} restaurants 
-            in the {categories[hovered].category} category.
+            there are <strong>{categories[hovered].count}</strong> restaurants 
+            in the <strong>{categories[hovered].category}</strong> category.
 		{/if}
 	</div>
 

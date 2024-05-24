@@ -65,7 +65,7 @@
             <g class="axis x-axis">
                 {#each categories as category, i}
                     <g class="tick" transform="translate({xScale(i)},{height})">
-                        <text x={barWidth / 1.8} y="-6">{width > 380 ? category.category : formatMobile(category.category)}</text>
+                        <text x={barWidth / 1.8} y="-9">{width > 380 ? category.category : formatMobile(category.category)}</text>
                     </g>
                 {/each}
             </g>
@@ -99,8 +99,8 @@
     </div>
     <div
 		class={hovered === -1 ? "tooltip-hidden": "tooltip-visible"}
-        style="left: {recorded_mouse_position.x + 20}px; top: 
-        {recorded_mouse_position.y + 20}px"	
+        style="left: {recorded_mouse_position.x - 280}px; top: 
+        {recorded_mouse_position.y - 100}px"	
 	>
 		{#if hovered !== -1}
 			Out of 1159 restaurants in Santa Barbara,
@@ -115,6 +115,7 @@
     h2 {
 		text-align: center;
         font-family: Helvetica, Arial;
+        font-size: x-large;
 	}
 
 	.chart {
@@ -131,7 +132,7 @@
 
 	.tick {
 		font-family: Helvetica, Arial;
-		font-size: 0.725em;
+		font-size: 0.350em;
 		font-weight: 200;
 	}
 

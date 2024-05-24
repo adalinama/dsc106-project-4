@@ -69,10 +69,10 @@
        ];
      }
     let isVisible=false;
-    $: if (index===2) {
+    $: if (index>2 || index===0) {
       isVisible=true;
     } else {
-      isVisible=true;
+      isVisible=false;
     }
   </script>
   
@@ -93,7 +93,6 @@
       opacity: 0;
       visibility: hidden;
       transition: opacity 2s, visibility 2s;
-      outline: blue solid 3px;
     }
   
     .map.visible {

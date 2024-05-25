@@ -102,9 +102,9 @@
       <section>
         <Bar />
       </section>
-      <section>This is the fourth section.</section>
-      <section>This is the fifth section.</section>
-      <section>This is the sixth section.</section>
+      <section>Fourth section</section>
+      <section>Fifth section</section>
+      <section>Sixth section</section>
     </div>
   
   </Scroller>

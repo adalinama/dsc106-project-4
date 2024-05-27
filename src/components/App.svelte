@@ -5,7 +5,6 @@
 
 <main>
   <Bar />
-
 </main>
 
 <style>

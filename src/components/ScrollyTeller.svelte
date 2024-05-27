@@ -3,10 +3,12 @@
   import Map from "./Map.svelte";
   import Bar from "./App.svelte";
   import Search from "./Search.svelte";
+  import RestaurantMap from "./RestaurantMap.svelte";
   import { geoMercator } from "d3-geo";
+
   let count, index, offset, progress;
   let width, height;
-  
+
   let geoJsonToFit = {
     type: "FeatureCollection",
     features: [
@@ -76,7 +78,8 @@
   bind:progress
 >
   <div class="background" slot="background" bind:clientWidth={width} bind:clientHeight={height} style="opacity: {progress < 0.9 ? 1 : (1 - progress)};">
-    <Map bind:geoJsonToFit {index}/>
+    <Map bind:geoJsonToFit {index} />
+    <RestaurantMap {index} {width} {height} {projection} />
     <div class="progress-bars">
       <p>current section: <strong>{index + 1}/{count}</strong></p>
       <progress value={count ? (index + 1) / count : 0} />

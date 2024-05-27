@@ -14,7 +14,7 @@
   
     function updateZoomLevel() {
       const screenWidth = window.innerWidth;
-      zoomLevel = screenWidth <= 600 ? 10 : 11; // Adjust these values as needed
+      zoomLevel = screenWidth <= 600 ? 10 : 11.5; // Adjust these values as needed
     }
   
     function handleResize() {

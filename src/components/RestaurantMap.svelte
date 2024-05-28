@@ -1,59 +1,100 @@
 <script>
-  import { onMount } from "svelte";
-  import { geoMercator } from "d3-geo";
+  import { onMount, afterUpdate } from "svelte";
 
-  export let index, width, height;
+  export let index;
+  export let width;
+  export let height;
+  export let projection;
 
   let restaurants = [];
-  let projection;
+  let transformedRestaurants = [];
+  let centerCoordinates;
 
   // Function to fetch restaurant data
   async function fetchData() {
-    const response = await fetch("/santa_barbara_restaurants.csv");
-    const data = await response.text();
-    const rows = data.split("\n").slice(1); // Skip header row
-    // Process each row of the CSV data
-    restaurants = rows.map((row) => {
-      const [latitude, longitude, name, cuisine, category, stars, review_count] = row.split(",");
-      return {
-        latitude: parseFloat(latitude),
-        longitude: parseFloat(longitude),
-        name,
-        cuisine,
-        category,
-        stars: parseFloat(stars),
-        review_count: parseInt(review_count)
-      };
-    });
+    try {
+      const response = await fetch("/santa_barbara_restaurants.csv");
+      const data = await response.text();
+      const rows = data.split("\n").slice(1); // Skip header row
+      // Process each row of the CSV data
+      restaurants = rows.map((row) => {
+        const columns = row.split(",");
+        return {
+          name: columns[2],
+          address: columns[3],
+          latitude: parseFloat(columns[7]),
+          longitude: parseFloat(columns[8]),
+          stars: parseFloat(columns[9]),
+          review_count: parseInt(columns[10]),
+          category: columns[14],
+          cuisine: columns[15],
+        };
+      });
+      // Transform restaurant coordinates using the projection
+      transformedRestaurants = restaurants.map(restaurant => {
+        const [x, y] = projection([restaurant.longitude, restaurant.latitude]);
+        return { ...restaurant, x, y };
+      });
+      // Calculate center coordinates after data loading
+      centerCoordinates = projection([-119.75822, 34.426811]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
 
-  onMount(() => {
-    fetchData();
+  // Call fetchData on component mount
+  onMount(fetchData);
 
-    // Initialize projection
-    projection = geoMercator()
-      .center([-119.705822, 34.426811]) // Center on Santa Barbara
-      .translate([width / 2, height / 2]) // Translate to center of the SVG
-      .scale(10000); // Adjust scale as needed
-  });
+  // Call fetchData when the index changes
+  $: {
+    if (index >= 3) {
+      fetchData();
+    }
+  }
 
-  // Transform restaurant coordinates
-  $: transformedRestaurants = restaurants.map(restaurant => {
-    const [x, y] = projection([restaurant.longitude, restaurant.latitude]);
-    return { ...restaurant, x, y };
-  });
+  function getCategoryColor(cuisine) {
+    // Define color mappings for different categories
+    const colorMap = {
+      "American": "blue",
+      "Italian": "green",
+      "Mexican": "orange",
+      "Chinese": "red",
+      "Japanese": "white",
+      "Mediterranean": "olive",
+    };
+    return colorMap[cuisine] || "gray";
+  }
+
+  const topRatedRestaurants = transformedRestaurants
+    .slice()
+    .sort((a, b) => b.stars - a.stars);
 </script>
 
 <svg class="graph" width={width} height={height}>
-  {#if index === 4}
+  {#if index === 3 | index === 4 | index === 6}
     {#each transformedRestaurants as restaurant}
       <circle
         cx={restaurant.x}
         cy={restaurant.y}
-        r="5"
+        r="3"
+        fill={index === 4 ? getCategoryColor(restaurant.cuisine) : "#FF5733"}
+        stroke="#000000"
+        stroke-width="0.5"
+        title={restaurant.name}
+      >
+        <title>{restaurant.name}</title>
+      </circle>
+    {/each}
+  {/if}
+  {#if index === 5}
+    {#each transformedRestaurants.slice(0, 50) as restaurant}
+      <circle
+        cx={restaurant.x}
+        cy={restaurant.y}
+        r="3"
         fill="#FFCCBC"
-        stroke="#FF5733"
-        stroke-width="2"
+        stroke="#000000"
+        stroke-width="0.5"
         title={restaurant.name}
       >
         <title>{restaurant.name}</title>
@@ -63,7 +104,6 @@
 </svg>
 
 <style>
-  /* Add your custom styles here */
   svg.graph {
     width: 100%;
     height: 100%;
@@ -73,5 +113,9 @@
   }
   circle:hover {
     transform: scale(1.5);
+  }
+  .legend text {
+    font-size: 12px;
+    fill: black;
   }
 </style>

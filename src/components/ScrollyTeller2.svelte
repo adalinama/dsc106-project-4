@@ -1,7 +1,7 @@
 <script>
   import Scroller from "@sveltejs/svelte-scroller";
   import Map from "./Map.svelte";
-  import Bar from "./Bar.svelte";
+  import Bar from "./App.svelte";
   import Search from "./Search.svelte";
   import RestaurantMap from "./RestaurantMap.svelte";
   import { geoMercator } from "d3-geo";

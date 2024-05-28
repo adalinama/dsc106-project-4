@@ -38,6 +38,11 @@
           <p>${restaurant.address}</p>
           <div>
             ${getStarIcons(restaurant.stars)}
+          </div>
+          <div>
+            <a href="https://www.yelp.com/biz/${restaurant.name.toLowerCase().replace(/['']/g, "")
+            .replace(/&/g, "and").split(/[\s-]+/).join("-")}-${restaurant.city.toLowerCase().split(" ").join("-")}"
+            target="_blank">Link</a>
           </div>`
         );
   

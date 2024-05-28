@@ -4,7 +4,7 @@
 </script>
 
 <main>
-  <Bar />
+
 </main>
 
 <style>

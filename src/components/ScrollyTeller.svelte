@@ -1,10 +1,8 @@
 <script>
   import Scroller from "@sveltejs/svelte-scroller";
   import Map from "./Map.svelte";
-  import Bar from "./App.svelte";
+  import Bar from "./Bar.svelte";
   import Search from "./Search.svelte";
-  import RestaurantMap from "./RestaurantMap.svelte";
-  import { geoMercator } from "d3-geo";
 
   let count, index, offset, progress;
   let width, height;
@@ -28,8 +26,6 @@
       },
     ],
   };
-  
-  $: projection = geoMercator().fitSize([width, height], geoJsonToFit);
 </script>
   
 <style>
@@ -37,7 +33,7 @@
     width: 100%;
     height: 100vh;
     position: relative;
-    transition: opacity 0.5s ease; /* Add transition for smooth opacity change */
+    transition: opacity 0.5s ease;
   }
 
   .foreground {
@@ -51,17 +47,16 @@
 
   .progress-bars {
     position: absolute;
-    background: #ADD8E6; /*  20% opaque */
+    background: #ADD8E6;
     opacity: 0.7;
     visibility: visible;
   }
 
   section {
     height: 120vh;
-    background-color: rgba(0, 0, 0, 0); /* 20% opaque */
-    /* color: white; */
+    background-color: rgba(0, 0, 0, 0);
     text-align: center;
-    max-width: 1000px; /* adjust at will */
+    max-width: 1000px;
     color: black;
     padding: 1em;
     margin: 0 0 2em 0;
@@ -79,7 +74,6 @@
 >
   <div class="background" slot="background" bind:clientWidth={width} bind:clientHeight={height} style="opacity: {progress < 0.9 ? 1 : (1 - progress)};">
     <Map bind:geoJsonToFit {index} />
-    <RestaurantMap {index} {width} {height} {projection} />
     <div class="progress-bars">
       <p>current section: <strong>{index + 1}/{count}</strong></p>
       <progress value={count ? (index + 1) / count : 0} />
@@ -113,6 +107,9 @@
     <section>This is the eighth section.</section>
     <section>This is the ninth section.</section>
     <section> 
-      <Search /> </section>
+      <Search /> 
+      Looking for a resturant?
+      
+    </section>
   </div>
 </Scroller>

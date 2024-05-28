@@ -143,9 +143,7 @@
       </div>
     </section>
     <section>
-      <div class="section-text">
-        <p>{"8: Find the Restaurant for You"}</p>
-      </div>
+      8: Find the Restaurant for You.
       <Search /> 
     </section>
   </div>

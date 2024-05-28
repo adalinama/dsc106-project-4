@@ -33,16 +33,17 @@
           .setLngLat([parseFloat(restaurant.longitude), parseFloat(restaurant.latitude)])
           .addTo(map);
         
-        const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-          `<h3>${restaurant.name}</h3>
+        let popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+          `<h3>
+            <a href="https://www.yelp.com/biz/${restaurant.name.toLowerCase().replace(/['']/g, "")
+            .replace(/&/g, "and").split(/[\s-]+/).join("-")}-${restaurant.city.toLowerCase().split(" ").join("-")}"
+            target="_blank">
+            ${restaurant.name}
+            </a>
+            </h3>
           <p>${restaurant.address}</p>
           <div>
             ${getStarIcons(restaurant.stars)}
-          </div>
-          <div>
-            <a href="https://www.yelp.com/biz/${restaurant.name.toLowerCase().replace(/['']/g, "")
-            .replace(/&/g, "and").split(/[\s-]+/).join("-")}-${restaurant.city.toLowerCase().split(" ").join("-")}"
-            target="_blank">Link</a>
           </div>`
         );
   
@@ -118,6 +119,7 @@
       color: gold; /* Set the color of the stars */
       font-size: 20px; /* Adjust the size of the stars */
     }
+
 </style>
   
 <div id="map"></div>

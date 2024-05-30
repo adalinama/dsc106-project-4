@@ -1,6 +1,7 @@
 <script>
   import mapboxgl from "mapbox-gl";
   import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
   export let index;
   export let geoJsonToFit;
 
@@ -9,29 +10,104 @@
   let container;
   let map;
   let restaurants = [];
+  let source;
+
+  let categoryColors = {
+      "American": "blue",
+      "Italian": "lightgreen",
+      "Mexican": "yellow",
+      "Chinese": "red",
+      "Japanese": "white",
+      "Mediterranean": "olive",
+      "Thai": "purple",
+      "Korean": "lightblue",
+      "Indian": "orange",
+    };
+
+  // Define zoom levels for each index
+  const zoomLevels = [10, 10, 10, 10.25, 11.5, 13, 12];
 
   // Function to fetch restaurant data
   async function fetchData() {
-    const response = await fetch("/santa_barbara_restaurants.csv");
-    const data = await response.text();
-    const rows = data.split("\n").slice(1); // Skip header row
-    // Process each row of the CSV data
-    restaurants = rows.map((row) => {
-      const [latitude, longitude, name, cuisine, category, stars, review_count] = row.split(",");
-      return {
-        latitude: parseFloat(latitude),
-        longitude: parseFloat(longitude),
-        name,
-        cuisine,
-        category,
-        stars: parseFloat(stars),
-        review_count: parseInt(review_count)
-      };
-    });
+    try {
+      const response = await fetch("/santa_barbara_restaurants.csv");
+      const data = await response.text();
+      const rows = data.split("\n").slice(1); // Skip header row
+
+      // Process each row of the CSV data
+      restaurants = rows.map((row) => {
+        // Use regex to split the row by commas, handling quoted strings or lists with commas
+        const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+
+        // Trim whitespace and remove quotes from values
+        const cleanColumns = columns.map((column) => column.trim().replace(/(^")|("$)/g, ''));
+
+        return {
+          name: cleanColumns[2],
+          address: cleanColumns[3],
+          latitude: parseFloat(cleanColumns[7]),
+          longitude: parseFloat(cleanColumns[8]),
+          stars: parseFloat(cleanColumns[9]),
+          review_count: parseInt(cleanColumns[10]),
+          category: cleanColumns[14],
+          cuisine: cleanColumns[15],
+        };
+      });
+
+      // Transform restaurant coordinates using the projection
+      transformedRestaurants = restaurants.map(restaurant => {
+        const [x, y] = projection([restaurant.longitude, restaurant.latitude]);
+        return { ...restaurant, x, y };
+      });
+
+      // Calculate center coordinates after data loading
+      centerCoordinates = projection([-119.75822, 34.426811]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  function getCategoryColor(cuisine) {
+    const colorMap = {
+      "American": "blue",
+      "Italian": "lightgreen",
+      "Mexican": "yellow",
+      "Chinese": "red",
+      "Japanese": "white",
+      "Mediterranean": "olive",
+      "Thai": "purple",
+      "Korean": "lightblue",
+      "Indian": "orange",
+    };
+    return colorMap[cuisine] || "gray";
+  }
+
+  function getCircleRadius(index) {
+    // Adjust the coefficient as needed for appropriate scaling
+    const coefficient = 0.0025;
+    return coefficient * (zoomLevels[index])**3;
   }
 
   function addRestaurantsToMap() {
-    const features = restaurants.map((restaurant) => ({
+
+    let filteredRestaurants = restaurants;
+    if (index < 2) {
+      filteredRestaurants = restaurants.slice(0,0);
+    }
+    if (index === 5) {
+      filteredRestaurants = restaurants
+        .slice()
+        .sort((a, b) => b.stars - a.stars)
+        .slice(0, 50)
+    }
+    if (index === 6) {
+      filteredRestaurants = restaurants
+        .slice()
+        .sort((a, b) => b.review_count - a.review_count)
+        .slice(0, 100)
+    }
+
+    const features = filteredRestaurants.map((restaurant) => ({
       type: "Feature",
       geometry: {
         type: "Point",
@@ -42,51 +118,50 @@
         cuisine: restaurant.cuisine,
         category: restaurant.category,
         stars: restaurant.stars,
-        review_count: restaurant.review_count
+        review_count: restaurant.review_count,
+        color: index === 4 ? getCategoryColor(restaurant.cuisine) : index === 5 ? "#DEB94F" : index === 6 ? "#E16491" : "#FF5733",
+        radius: getCircleRadius(index),
       }
     }));
 
-    map.addSource("restaurants", {
-      type: "geojson",
-      data: {
+    source = map.getSource("filteredRestaurants");
+
+    if (!source) {
+      source = {
+        type: "geojson",
+        data: {
+          type: "FeatureCollection",
+          features
+        }
+      };
+
+      map.addSource("filteredRestaurants", source)
+
+      map.addLayer(
+        {
+        id: "filteredRestaurants",
+        type: "circle",
+        source: "filteredRestaurants",
+        paint: {
+          "circle-radius": ["get", "radius"],
+          "circle-color": ["get", "color"],
+          "circle-stroke-color": "#000000",
+          "circle-stroke-width": 0.5,
+        }
+      }
+      );
+    } else {
+      source.setData({
         type: "FeatureCollection",
         features
-      }
-    });
-
-    map.addLayer({
-      id: "restaurants",
-      type: "circle",
-      source: "restaurants",
-      paint: {
-        "circle-radius": 5,
-        "circle-color": "#FFCCBC",
-        "circle-stroke-color": "#FF5733",
-        "circle-stroke-width": 2
-      }
-    });
-
-    map.on('mouseenter', 'restaurants', (e) => {
-      map.getCanvas().style.cursor = 'pointer';
-      const coordinates = e.features[0].geometry.coordinates.slice();
-      const { name, stars, review_count } = e.features[0].properties;
-
-      new mapboxgl.Popup()
-        .setLngLat(coordinates)
-        .setHTML(`<strong>${name}</strong><br/>Stars: ${stars}<br/>Reviews: ${review_count}`)
-        .addTo(map);
-    });
-
-    map.on('mouseleave', 'restaurants', () => {
-      map.getCanvas().style.cursor = '';
-      map.getPopup().remove();
-    });
+      });
+    }
   }
 
   onMount(async () => {
     await fetchData();
 
-    const zoomLevel = window.innerWidth <= 600 ? 10 : 11.5;
+    const zoomLevel = window.innerWidth <= 600 ? 10 : zoomLevels[0];
     map = new mapboxgl.Map({
       container,
       style: "mapbox://styles/mapbox/outdoors-v12",
@@ -103,9 +178,14 @@
       map.on("move", updateBounds);
     });
 
+    map.on("moveend", () => {
+      addRestaurantsToMap();
+    });
+
     window.addEventListener("resize", () => {
       const screenWidth = window.innerWidth;
-      map.setZoom(screenWidth <= 600 ? 10 : 11.5);
+      const newZoomLevel = screenWidth <= 600 ? 10 : zoomLevels[index] || zoomLevels[0];
+      map.easeTo({ zoom: newZoomLevel, duration: 1000 });
     });
   });
 
@@ -122,7 +202,16 @@
   }
 
   let isVisible = false;
-  $: isVisible = index > 2 || index === 0;
+  $: isVisible = index === 0 || index > 2;
+
+  let showLegend = false;
+  $: showLegend = index === 4;
+
+  // Update zoom level when index changes with smooth transition
+  $: if (map && zoomLevels[index] !== undefined) {
+    map.easeTo({ zoom: zoomLevels[index], duration: 1000 });
+  }
+
 </script>
 
 <svelte:head>
@@ -131,6 +220,20 @@
 
 <div class="map" class:visible={isVisible} bind:this={container} />
 
+{#if showLegend}
+  <div class="map-legend" transition:fade={{ delay: 800, duration: 200 }}>
+    <h3>Cuisine Legend</h3>
+    <ul>
+      {#each Object.entries(categoryColors) as [cuisine, color]}
+        <li>
+          <span class="legend-circle" style="background-color: {color};"></span>
+          {cuisine}
+        </li>
+      {/each}
+    </ul>
+  </div>
+{/if}
+
 <style>
   .map {
     width: 100%;
@@ -138,11 +241,44 @@
     position: absolute;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 2s, visibility 2s;
+    transition: opacity 1s, visibility 1s;
   }
 
   .map.visible {
     opacity: 1;
     visibility: visible;
+  }
+
+  .map-legend {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000;
+    transition: opacity 1s;
+  }
+
+  .map-legend h3 {
+    margin-top: 0;
+  }
+
+  .map-legend ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  .map-legend li {
+    margin-bottom: 5px;
+  }
+
+  .legend-circle {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
   }
 </style>

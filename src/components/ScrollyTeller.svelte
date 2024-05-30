@@ -3,7 +3,6 @@
   import Map from "./Map.svelte";
   import Bar from "./Bar.svelte";
   import Search from "./Search.svelte";
-  import RestaurantMap from "./RestaurantMap.svelte";
   import { geoMercator } from "d3-geo";
   import { onMount } from "svelte";
 
@@ -90,10 +89,6 @@
   <div class="background" slot="background" bind:clientWidth={width} bind:clientHeight={height} style="opacity: {progress < 0.9 ? 1 : (1 - progress)};">
     <div style="position: relative; z-index: -1;">
       <Map bind:geoJsonToFit {index} />
-    </div>
-    
-    <div style="position: relative; z-index: 1;">
-      <RestaurantMap {index} {width} {height} {projection} />
     </div>
 
     <div class="progress-bars">

@@ -119,7 +119,7 @@
       color: gold; /* Set the color of the stars */
       font-size: 20px; /* Adjust the size of the stars */
     }
-
+               
 </style>
   
 <div id="map"></div>

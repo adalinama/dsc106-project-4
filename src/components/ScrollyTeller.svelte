@@ -109,36 +109,48 @@
       <p>A guide to the American Riviera's best culinary experiences</p>
     </section>
     <section>
-      You're on a daytrip to Santa Barbara with a group of your friends.
+      <p>You're on a daytrip to Santa Barbara with a group of your friends.
       After a long morning of exploring the various attractions that the city
       has to offer, everyone is hungry. However, the area is unfamiliar and your
-      friends are indecisive, so it's difficult to narrow down food options. 
+      friends are indecisive, so it's difficult to narrow down food options. </p>
+
+      <p>It turns out Santa Barbara is very diverse! From Mexican food to Japanese food,
+      there are many options to choose from. Each restaurant has its own set of category tags
+      that accurately describe the type of restaurant. Let's view what some of the most popular
+      categories are:</p>
     </section>
     <section>
       <Bar />
+      <p>This could give you a good idea of the diversity of restaurants to choose from. 
+        However, it might be more useful to look at a map and to determine which restaurants are in
+        your vicinity. Let's take a look at the spread of all restaurants in Santa
+        Barbara County.
+      </p>
     </section>
     <section>
       <div class="section-text">
-        <p>{"4: Restaurants in Santa Barbara"}</p>
+        <p>{"All Restaurants in Santa Barbara"}</p>
       </div>
     </section>
     <section>
       <div class="section-text">
-        <p>{"5: Restaurants by Cuisine"}</p>
+        <p>{"Restaurants by Cuisine"}</p>
       </div>
     </section>
     <section>
       <div class="section-text">
-        <p>{"6: Highest Rated Restaurants"}</p>
+        <p>{"Highest Rated Restaurants"}</p>
       </div>
     </section>
     <section>
       <div class="section-text">
-        <p>{"7: Most Reviewed Restaurants"}</p>
+        <p>{"Most Reviewed Restaurants"}</p>
       </div>
     </section>
     <section>
-      8: Find the Restaurant for You.
+      <p>Are you ready to find the perfect restaurant for you? Use the search bar below to
+        discover the dining experience that suits your taste.
+      </p>
       <Search /> 
     </section>
   </div>

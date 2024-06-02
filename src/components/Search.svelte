@@ -37,7 +37,7 @@
           `<h3>
             <a href="https://www.yelp.com/biz/${restaurant.name.toLowerCase().replace(/['']/g, "")
             .replace(/&/g, "and").split(/[\s-]+/).join("-")}-${restaurant.city.toLowerCase().split(" ").join("-")}"
-            target="_blank">
+            target="_blank" style="color: blue;">
             ${restaurant.name}
             </a>
             </h3>
@@ -125,5 +125,5 @@
 <div id="map"></div>
   
 <div class="search-container">
-    <input type="text" class="search-input" placeholder="Search..." bind:value={searchValue} on:input={handleSearchInputChange}>
+    <input type="text" class="search-input" placeholder='Try searching "pizza", "taco", etc.' bind:value={searchValue} on:input={handleSearchInputChange}>
 </div>

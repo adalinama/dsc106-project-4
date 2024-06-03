@@ -143,8 +143,8 @@
     </section>
     <section>
       <div class="grid-content">
-        <img class="sbimage1" src="/sbbeach.jpeg" alt="Beach" width="400" height="250"> 
-        <img class="sbimage2" src="/sbdowntown.jpeg" alt="Downtown" width="400" height="250">
+        <img class="sbimage1" src="{base}/sbbeach.jpeg" alt="Beach" width="400" height="250"> 
+        <img class="sbimage2" src="{base}/sbdowntown.jpeg" alt="Downtown" width="400" height="250">
       </div>
 
       <p>You're on a daytrip to Santa Barbara with a group of your friends.
@@ -156,11 +156,11 @@
       there are many options to choose from.</p>
 
       <div class="grid-content-2">
-        <img class="foodimage1" src="/pasta.jpeg" alt="Pasta" width="300" height="180"> 
+        <img class="foodimage1" src="{base}/pasta.jpeg" alt="Pasta" width="300" height="180"> 
   
-      <img class="foodimage2" src="/chinese.webp" alt="Chinese" width="300" height="180">
+      <img class="foodimage2" src="{base}/chinese.webp" alt="Chinese" width="300" height="180">
 
-      <img class="foodimage3" src="/seafood.webp" alt="Seafood" width="300" height="180">
+      <img class="foodimage3" src="{base}/seafood.webp" alt="Seafood" width="300" height="180">
     </div>
       
       <p>Each restaurant has its own set of category tags that accurately describe the 

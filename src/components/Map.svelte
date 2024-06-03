@@ -14,14 +14,15 @@
 
   let categoryColors = {
       "American": "blue",
-      "Italian": "lightgreen",
       "Mexican": "yellow",
+      "Italian": "lightgreen",
       "Chinese": "red",
       "Japanese": "white",
-      "Mediterranean": "olive",
+      "Mediterranean": "darkgreen",
       "Thai": "purple",
       "Korean": "lightblue",
       "Indian": "orange",
+      "Other": "gray",
     };
 
   // Define zoom levels for each index

@@ -186,12 +186,12 @@
     </section>
     <section>
       <div class="section-text">
-        <p>{"Highest Rated Restaurants"}</p>
+        <p>{"Five-Star Restaurants"}</p>
       </div>
     </section>
     <section>
       <div class="section-text">
-        <p>{"Most Reviewed Restaurants"}</p>
+        <p>{"Restaurants With Over 500 Reviews"}</p>
       </div>
     </section>
     <section>
@@ -202,9 +202,7 @@
           a restaurant seems appealing to you, click on the link to direct you to the
           restaurant's Yelp page, where you can check dining hours, view the menu, and even 
           make reservations.)</small>
-
       </p>
-      
       <Search /> 
     </section>
   </div>

@@ -25,7 +25,7 @@
     };
 
   // Define zoom levels for each index
-  const zoomLevels = [10, 10, 10, 10.25, 11.5, 13, 12];
+  const zoomLevels = [10, 10, 10, 10.25, 11.5, 12.5, 12];
 
   // Function to fetch restaurant data
   async function fetchData() {
@@ -95,16 +95,10 @@
       filteredRestaurants = restaurants.slice(0,0);
     }
     if (index === 5) {
-      filteredRestaurants = restaurants
-        .slice()
-        .sort((a, b) => b.stars - a.stars)
-        .slice(0, 50)
+      filteredRestaurants = restaurants.filter(restaurant => restaurant.stars === 5);
     }
     if (index === 6) {
-      filteredRestaurants = restaurants
-        .slice()
-        .sort((a, b) => b.review_count - a.review_count)
-        .slice(0, 100)
+      filteredRestaurants = restaurants.filter(restaurant => restaurant.review_count >= 500);
     }
 
     const features = filteredRestaurants.map((restaurant) => ({
@@ -147,9 +141,9 @@
           "circle-color": ["get", "color"],
           "circle-stroke-color": "#000000",
           "circle-stroke-width": 0.5,
+          "circle-opacity": 1
         }
-      }
-      );
+      });
     } else {
       source.setData({
         type: "FeatureCollection",
@@ -157,6 +151,8 @@
       });
     }
   }
+
+  
 
   onMount(async () => {
     await fetchData();

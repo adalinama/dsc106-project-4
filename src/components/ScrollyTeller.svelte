@@ -136,7 +136,7 @@
       <h1>Flavors of Santa Barbara</h1>
       <p>A guide to the American Riviera's best culinary experiences</p>
       <p>By Mark Lee, Adalina Ma and Eric Stratford</p>
-      <img class="welcome" src="/welcome_sign.png" alt="welcome-sign" width="400" height="250">
+      <img class="welcome" src="/welcome_sign.jpg" alt="welcome-sign" width="400" height="250">
     </section>
     <section>
       <div class="grid-content">

@@ -5,6 +5,7 @@
   import Search from "./Search.svelte";
   import { geoMercator } from "d3-geo";
   import { onMount } from "svelte";
+  import { base } from '$app/paths';
 
   let count, index, offset, progress;
   let width, height;
@@ -137,7 +138,7 @@
       <p>A guide to the American Riviera's best culinary experiences</p>
       <p>By Mark Lee, Adalina Ma and Eric Stratford</p>
       <div>
-        <img class="welcome" src="/welcome.jpeg" alt="welcome" width="400" height="250">
+        <img class="welcome" src="{base}/welcome.jpeg" alt="welcome" width="400" height="250">
       </div>
     </section>
     <section>

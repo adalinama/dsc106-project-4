@@ -136,14 +136,15 @@
       <h1>Flavors of Santa Barbara</h1>
       <p>A guide to the American Riviera's best culinary experiences</p>
       <p>By Mark Lee, Adalina Ma and Eric Stratford</p>
-      <img class="welcome" src="/welcome_sign.jpg" alt="welcome-sign" width="400" height="250">
+      <div>
+        <img class="welcome" src="/welcome.jpeg" alt="welcome" width="400" height="250">
+      </div>
     </section>
     <section>
       <div class="grid-content">
         <img class="sbimage1" src="/sbbeach.jpeg" alt="Beach" width="400" height="250"> 
-  
-      <img class="sbimage2" src="/sbdowntown.jpeg" alt="Downtown" width="400" height="250" style="top-margin: 500px;">
-    </div>
+        <img class="sbimage2" src="/sbdowntown.jpeg" alt="Downtown" width="400" height="250">
+      </div>
 
       <p>You're on a daytrip to Santa Barbara with a group of your friends.
       After a long morning of exploring the various attractions that the city

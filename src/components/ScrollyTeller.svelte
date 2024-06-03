@@ -47,6 +47,7 @@
     position: relative;
     font-size: 30px;
     font-family: American Typewriter, serif;
+    margin-right: 105px;
   }
 
   .section-text {
@@ -75,6 +76,42 @@
     padding: 1em;
     margin: 0 0 2em 0;
   }
+
+  .grid-content { 
+    /* displays images side by side */
+    width: 73%; 
+    margin-left: 20px; 
+    height: 28%; 
+    padding: 20px; 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 130px;
+  } 
+
+  .grid-content-2 { 
+    /* displays images side by side */
+    width: 73%; 
+    height: 20%; 
+    padding: 5px; 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 60px;
+  } 
+
+  .sbimage1, .sbimage2, .foodimage1, .foodimage2, .foodimage3 {
+  /* create shadow effect */
+  box-shadow: 0 0 10px 5px rgba(0,0,0,0.3);
+  border-radius: 15px;
+}
+
+.welcome {
+  /* create slightly smaller shadow effect */
+  box-shadow: 0 0 10px 5px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  margin-top: 160px;
+}
+
+  
 </style>
   
 <Scroller
@@ -91,33 +128,41 @@
       <Map bind:geoJsonToFit {index} />
     </div>
 
-    <div class="progress-bars">
-      <p>current section: <strong>{index + 1}/{count}</strong></p>
-      <progress value={count ? (index + 1) / count : 0} />
-      
-      <p>offset in current section</p>
-      <progress value={progress || 0} />
-      
-      <p>total progress</p>
-      <progress value={progress || 0} />
-    </div>
+    
   </div>
   
   <div class="foreground" slot="foreground">
     <section>
       <h1>Flavors of Santa Barbara</h1>
       <p>A guide to the American Riviera's best culinary experiences</p>
+      <p>By Mark Lee, Adalina Ma and Eric Stratford</p>
+      <img class="welcome" src="/welcome_sign.png" alt="welcome-sign" width="400" height="250">
     </section>
     <section>
+      <div class="grid-content">
+        <img class="sbimage1" src="/sbbeach.jpeg" alt="Beach" width="400" height="250"> 
+  
+      <img class="sbimage2" src="/sbdowntown.jpeg" alt="Downtown" width="400" height="250" style="top-margin: 500px;">
+    </div>
+
       <p>You're on a daytrip to Santa Barbara with a group of your friends.
       After a long morning of exploring the various attractions that the city
       has to offer, everyone is hungry. However, the area is unfamiliar and your
       friends are indecisive, so it's difficult to narrow down food options. </p>
 
       <p>It turns out Santa Barbara is very diverse! From Mexican food to Japanese food,
-      there are many options to choose from. Each restaurant has its own set of category tags
-      that accurately describe the type of restaurant. Let's view what some of the most popular
-      categories are:</p>
+      there are many options to choose from.</p>
+
+      <div class="grid-content-2">
+        <img class="foodimage1" src="/pasta.jpeg" alt="Pasta" width="300" height="180"> 
+  
+      <img class="foodimage2" src="/chinese.webp" alt="Chinese" width="300" height="180">
+
+      <img class="foodimage3" src="/seafood.webp" alt="Seafood" width="300" height="180">
+    </div>
+      
+      <p>Each restaurant has its own set of category tags that accurately describe the 
+      type of restaurant. Let's view what some of the most popular categories are:</p>
     </section>
     <section>
       <Bar />
@@ -148,9 +193,16 @@
       </div>
     </section>
     <section>
-      <p>Are you ready to find the perfect restaurant for you? Use the search bar below to
-        discover the dining experience that suits your taste.
+      <p style="margin-bottom: 105px">Are you ready to find the perfect restaurant for you?
+        Use the search bar below to discover the dining experience that suits your taste.
+        <br>
+        <small style="font-size:small">(Drag the map around to explore Santa Barbara. If 
+          a restaurant seems appealing to you, click on the link to direct you to the
+          restaurant's Yelp page, where you can check dining hours, view the menu, and even 
+          make reservations.)</small>
+
       </p>
+      
       <Search /> 
     </section>
   </div>

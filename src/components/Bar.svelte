@@ -114,8 +114,8 @@
 <style>
     h2 {
 		text-align: center;
-        font-family: Helvetica, Arial;
-        font-size: x-large;
+        font-size: 30px;
+        font-family: American Typewriter, serif;
 	}
 
 	.chart {
@@ -131,7 +131,7 @@
 	}
 
 	.tick {
-		font-family: Helvetica, Arial;
+		font-family: American Typewriter, serif;
 		font-size: 0.350em;
 		font-weight: 200;
 	}
@@ -156,7 +156,7 @@
     
     .tooltip-hidden {
 		visibility: hidden;
-		font-family: Helvetica, Arial;
+		font-family: American Typewriter, serif;
 		width: 200px;
 		position: absolute;
         opacity: 0;
@@ -164,7 +164,7 @@
 
 	.tooltip-visible {
 		font: 15px Arial;
-		font-family: Helvetica, Arial;
+		font-family: American Typewriter, serif;
 		visibility: visible;
 		background-color: #ADD8E6;
 		border-radius: 10px;

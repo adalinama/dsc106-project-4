@@ -31,7 +31,7 @@
   // Function to fetch restaurant data
   async function fetchData() {
     try {
-      const response = await fetch("/santa_barbara_restaurants.csv");
+      const response = await fetch("santa_barbara_restaurants.csv");
       const data = await response.text();
       const rows = data.split("\n").slice(1); // Skip header row
 
@@ -55,14 +55,6 @@
         };
       });
 
-      // Transform restaurant coordinates using the projection
-      transformedRestaurants = restaurants.map(restaurant => {
-        const [x, y] = projection([restaurant.longitude, restaurant.latitude]);
-        return { ...restaurant, x, y };
-      });
-
-      // Calculate center coordinates after data loading
-      centerCoordinates = projection([-119.75822, 34.426811]);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

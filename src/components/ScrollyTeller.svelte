@@ -42,13 +42,10 @@
   }
 
   .foreground {
-    width: 80%;
-    margin: 0 auto;
-    height: auto;
-    position: relative;
+    width: 75%;
+    margin: auto;
     font-size: 30px;
     font-family: American Typewriter, serif;
-    margin-right: 105px;
   }
 
   .section-text {
@@ -58,13 +55,6 @@
     background-color: rgba(255, 255, 255, 0);
     padding: 10px;
     z-index: 1;
-  }
-
-  .progress-bars {
-    position: absolute;
-    background: #ADD8E6; /*  20% opaque */
-    opacity: 0.7;
-    visibility: visible;
   }
 
   section {
@@ -176,22 +166,22 @@
     </section>
     <section>
       <div class="section-text">
-        <p>{"All Restaurants in Santa Barbara"}</p>
+        <p><strong>{"All Restaurants in Santa Barbara"}</strong></p>
       </div>
     </section>
     <section>
       <div class="section-text">
-        <p>{"Restaurants by Cuisine"}</p>
+        <p><strong>{"Restaurants by Cuisine"}</strong></p>
       </div>
     </section>
     <section>
       <div class="section-text">
-        <p>{"Five-Star Restaurants"}</p>
+        <p><strong>{"Five-Star Restaurants"}</strong></p>
       </div>
     </section>
     <section>
       <div class="section-text">
-        <p>{"Restaurants With Over 500 Reviews"}</p>
+        <p><strong>{"Restaurants With Over 500 Reviews"}</strong></p>
       </div>
     </section>
     <section>

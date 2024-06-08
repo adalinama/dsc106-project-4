@@ -47,8 +47,6 @@
 </script>
   
 <main>
-    <h2>Most Common Restaurant Categories in Santa Barbara</h2>
-  
     <div class="chart" bind:clientWidth={width} bind:clientHeight={height}>
         <svg>
             <!-- y axis -->
